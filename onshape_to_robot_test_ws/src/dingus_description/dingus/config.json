@@ -1,0 +1,7 @@
+{
+    "documentId": "536a8051abba5659f38bd6ec", 
+    "outputFormat": "urdf",                                                                                                      
+    "packageName": "dingus_description/dingus",
+    "robotName": "dingus_robot",
+    "assemblyName": "dingus_v1"
+  }

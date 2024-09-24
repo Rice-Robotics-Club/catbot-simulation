@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot name="dingus_robot">
+<link name="arm">
+<visual>
+<origin xyz="1.7375145131068805376e-17 2.5731727734900986487e-17 0.5" rpy="1.9584515059070453039e-32 -1.7942814659981811069e-33 0.785398163397448279" />
+<geometry>
+<mesh filename="package://dingus_description/dingus/arm.stl"/>
+</geometry>
+<material name="arm_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="1.7375145131068805376e-17 2.5731727734900986487e-17 0.5" rpy="1.9584515059070453039e-32 -1.7942814659981811069e-33 0.785398163397448279" />
+<geometry>
+<mesh filename="package://dingus_description/dingus/arm.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.051995430176903459363 -0.051995430176903473241 0.51249999999999995559" rpy="0 0 0"/>
+<mass value="1.0855049989236233987" />
+<inertia ixx="0.0042535196501959715923" ixy="-0.0037856758511069172127"  ixz="-5.1432744097489893805e-36" iyy="0.0042535196501959715923" iyz="-1.4969238006915381895e-35" izz="0.0083939658630039978848" />
+</inertial>
+</link>
+
+<link name="base">
+<visual>
+<origin xyz="0 -3.0616169978683835572e-18 -0.5" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://dingus_description/dingus/base.stl"/>
+</geometry>
+<material name="base_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 -3.0616169978683835572e-18 -0.5" rpy="0 -0 0" />
+<geometry>
+<mesh filename="package://dingus_description/dingus/base.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="7.5101839249055280309e-19 3.8518598887744717061e-34 -0.25" rpy="0 0 0"/>
+<mass value="30.826877913349854055" />
+<inertia ixx="0.66149342189063231601" ixy="0"  ixz="0" iyy="0.66149342189063231601" iyz="0" izz="0.038533597391687331168" />
+</inertial>
+</link>
+
+<joint name="shoulder_1" type="revolute">
+<origin xyz="0 3.0616169978683835572e-18 0.5" rpy="0 -0 0" />
+<parent link="arm" />
+<child link="base" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" lower="-0.785398163397448279" upper="0.785398163397448279"/>
+<joint_properties friction="0.0"/>
+</joint>
+
+
+</robot>
