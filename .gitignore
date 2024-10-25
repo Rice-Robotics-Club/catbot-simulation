@@ -4,6 +4,10 @@ onshape_to_robot_test_ws/install/*
 onshape_to_robot_test_ws/log/*
 onshape_to_robot_test_ws/build/*
 
+catbot_sim_ws/install/*
+catbot_sim_ws/log/*
+catbot_sim_ws/build/*
+
 # in case someone colcon builds in wrong dir
 build/*
 log/*
