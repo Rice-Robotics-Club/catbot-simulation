@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.9">
+  <world name="Moon">
+    <!-- gravity of the moon -->
+    <gravity>0 0 -1.62</gravity>
+
+    <scene>
+      <ambient>0.0 0.0 0.0 0.0</ambient>
+      <background>0.0 0.0 0.0 1.0</background>
+      <grid>false</grid>
+    </scene>
+
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.05 0.05 0.05 1</specular>
+      <direction>-1 0.0 -0.4</direction>
+      <visualize>false</visualize>
+    </light>
+
+    <model name="garden_moon">
+      <static>true</static>
+      <pose>0 0 -5 0 0 0</pose>
+
+      <link name="link">
+        <pose>0 0 0 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <heightmap>
+              <uri>MoonHeightmap_8bit.png</uri>
+              <size>40960 40960 9177</size>
+              <pos>-3005.41 86.0 -7869.73</pos>
+            </heightmap>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <heightmap>
+              <use_terrain_paging>false</use_terrain_paging>
+              <texture>
+                <diffuse>TerrainNew_Albedo.jpg</diffuse>
+                <normal>TerrainNew_Normal.jpg</normal>
+                <size>120</size>
+              </texture>
+              <uri>height4k_modified.png</uri>
+              <size>40960 40960 9177</size>
+              <pos>-3005.41 86.0 -7869.73</pos>
+            </heightmap>
+          </geometry>
+        </visual>
+      </link>
+
+      <link name="stars">
+        <pose>0 0 0 0 0 0</pose>
+        <visual name="stars">
+          <geometry>
+            <mesh>
+              <uri>Stars.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <emissive>1 1 1 1</emissive>
+          </material>
+        </visual>
+      </link>
+      <link name="sun">
+        <pose>0 0 0 0 0 3.14</pose>
+        <visual name="sun">
+          <geometry>
+            <mesh>
+              <uri>Sun.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>1.0 1.0 1.0</specular>
+            <pbr>
+              <metal>
+                <albedo_map>SunOpaque.png</albedo_map>
+                <emissive_map>SunOpaque_Emissive.png</emissive_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+
+      <link name="earth">
+        <pose>0 0 10000 0 0 0</pose>
+        <visual name="earth">
+          <geometry>
+            <mesh>
+              <uri>Earth.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1.0 1.0 1.0</diffuse>
+            <specular>1.0 1.0 1.0</specular>
+            <pbr>
+              <metal>
+                <albedo_map>Earth.jpg</albedo_map>
+                <emissive_map>Earth.jpg</emissive_map>
+                <metalness>0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+
+    </model>
+
+
+  </world>
+</sdf>

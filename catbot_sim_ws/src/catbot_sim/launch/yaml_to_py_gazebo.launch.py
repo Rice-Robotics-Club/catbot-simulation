@@ -41,8 +41,8 @@ def generate_launch_description():
     # # NOTE: Do this BEFORE launching Gazebo Sim #
     install_dir_path = (get_package_prefix(package_description) + "/share")
     robot_meshes_path = os.path.join(package_directory, meshes_dir)
-    # pkg_models_path = os.path.join(package_directory, "models") # add local models path
-    gazebo_resource_paths = [install_dir_path, robot_meshes_path]
+    pkg_models_path = os.path.join(package_directory, "meshes") # add local models path
+    gazebo_resource_paths = [install_dir_path, robot_meshes_path, pkg_models_path]
     if "IGN_GAZEBO_RESOURCE_PATH" in os.environ:
         for resource_path in gazebo_resource_paths:
             if resource_path not in os.environ["IGN_GAZEBO_RESOURCE_PATH"]:

@@ -6,6 +6,7 @@ package_name = "catbot_sim"
 yaml_launch_files = glob(os.path.join("launch", "*.launch.yaml"))
 py_launch_files = glob(os.path.join("launch", "*.launch.py"))
 mesh_files = glob(os.path.join("meshes", "*"))
+world_files = glob(os.path.join("worlds", "*"))
 
 executables = glob(os.path.join(package_name, "*_node.py"))
 
@@ -25,6 +26,7 @@ setup(
         ("share/" + package_name + "/launch", yaml_launch_files),
         ("share/" + package_name + "/launch", py_launch_files),
         ("share/" + package_name + "/meshes", mesh_files),
+        ("share/" + package_name + "/worlds", world_files),
     ],
     install_requires=["setuptools"],
     zip_safe=True,
