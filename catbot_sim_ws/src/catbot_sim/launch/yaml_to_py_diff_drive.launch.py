@@ -1,12 +1,14 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import ExecuteProcess, DeclareLaunchArgument
 from launch.substitutions import (Command, LaunchConfiguration)
 from launch_ros.actions import (Node, SetParameter)
 from ament_index_python.packages import (get_package_prefix, get_package_share_directory)
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 import yaml
 
 ### Designed to convert a yaml file to a launcheable file that loads gazebo with the right SDFs, bridge, etc...
@@ -102,6 +104,19 @@ def generate_launch_description():
         ],
         output="screen",
     )
+    
+    load_joint_state_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'joint_state_broadcaster'],
+        output='screen'
+    )
+
+    load_diff_drive_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'diff_drive_base_controller'],
+        output='screen'
+    )
+
 
     # ROS-Gazebo Bridge #
     # GENERAL GAZEBO MAPPING BLUEPRINT:
@@ -136,6 +151,18 @@ def generate_launch_description():
             bridge,
             # Sets use_sim_time for all nodes started below (doesn't work for nodes started from ignition gazebo) #
             SetParameter(name="use_sim_time", value=True),
+            RegisterEventHandler(
+                event_handler=OnProcessExit(
+                    target_action=gz_spawn_entity,
+                    on_exit=[load_joint_state_controller],
+                )
+            ),
+            RegisterEventHandler(
+                event_handler=OnProcessExit(
+                    target_action=load_joint_state_controller,
+                    on_exit=[load_diff_drive_controller],
+                )
+            ),
             gz_sim,
             robot_state_publisher_node,
             declare_spawn_model_name,

@@ -3,10 +3,11 @@ import os
 from glob import glob
 
 package_name = "catbot_sim"
-yaml_launch_files = glob(os.path.join("launch", "*.launch.yaml"))
+yaml_launch_files = glob(os.path.join("launch", "*.launch.yml"))
 py_launch_files = glob(os.path.join("launch", "*.launch.py"))
 mesh_files = glob(os.path.join("meshes", "*"))
 world_files = glob(os.path.join("worlds", "*"))
+config_files = glob(os.path.join("config", "*"))
 
 executables = glob(os.path.join(package_name, "*_node.py"))
 
@@ -27,6 +28,7 @@ setup(
         ("share/" + package_name + "/launch", py_launch_files),
         ("share/" + package_name + "/meshes", mesh_files),
         ("share/" + package_name + "/worlds", world_files),
+        ("share/" + package_name + "/config", config_files),
     ],
     install_requires=["setuptools"],
     zip_safe=True,

@@ -1,0 +1,26 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    catbot_controller:
+      type: forward_command_controller/ForwardCommandController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+catbot_controller:
+  ros__parameters:
+    joints:
+      - BR_BotLeg
+      - BR_TopLeg
+      - BR_Hip
+      - BL_BotLeg
+      - BL_TopLeg
+      - BL_Hip
+      - FR_BotLeg
+      - FR_TopLeg
+      - FR_Hip
+      - FL_BotLeg
+      - FL_TopLeg
+      - FL_Hip
+    interface_name: position

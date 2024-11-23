@@ -1,0 +1,10 @@
+pkg_name: "catbot_sim"
+robot: 
+  name: "catbot" # name of .xacro file, and name to display in gazebo
+  meshes_dir: "meshes" # location of .stl, .urdf, .xacro files (robot mesh configs). If not "meshes" remember to add new dir to setup.py share data
+gazebo:
+  world: ""
+  worlds_dir: "worlds"
+  spawn_pos_xyz: [0.0, 0.0, 0.0]
+controllers: ["joint_state_broadcaster", "catbot_controller"] # in order of initialization
+ros_to_gz_bridge: "Also TBD"

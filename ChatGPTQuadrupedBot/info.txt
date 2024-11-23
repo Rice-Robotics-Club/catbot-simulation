@@ -1,0 +1,27 @@
+I'll provide a comprehensive setup:
+
+File setup:
+cd ~/ros2_ws/src
+ros2 pkg create quadruped_joystick_control --build-type ament_python --dependencies rclpy sensor_msgs geometry_msgs
+cd ~/ros2_ws
+colcon build
+source install/setup.bash
+
+Joystick Logic: Twist to servo angles -> joystick_controller.py
+
+Control System: Converts Twist messages from the joystick to angle inputs for the 12 servos.
+Gait Algorithm: Implements a crawl gait with at least three legs on the ground for stability.
+Simulation Launch File: Loads the robot in Gazebo Ignition Fortress, allowing you to simulate and visualize the movement.
+Let’s dive into each step.
+
+Control System: Twist to Servo Angles
+1. Kinematics Basics
+Inputs: Linear velocity (x) and angular velocity (z) from Twist.
+Outputs: Target joint angles for each servo.
+Each leg’s hip controls lateral positioning, while upper and lower legs control vertical motion.
+Use inverse kinematics (IK) to calculate joint angles for a given foot position.
+Impl -> quadruped_controller.py
+
+Simulation Launch File for Gazebo Ign Fortress -> quadruped_simulation.launch.py
+Replace /path/to/your/robot.urdf with the actual path to your robot's URDF file.
+
