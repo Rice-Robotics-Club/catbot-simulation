@@ -11,16 +11,16 @@ controller_manager:
 catbot_controller:
   ros__parameters:
     joints:
-      - BR_BotLeg
-      - BR_TopLeg
-      - BR_Hip
-      - BL_BotLeg
-      - BL_TopLeg
-      - BL_Hip
-      - FR_BotLeg
-      - FR_TopLeg
-      - FR_Hip
-      - FL_BotLeg
-      - FL_TopLeg
       - FL_Hip
+      - FL_TopLeg
+      - FL_BotLeg
+      - FR_Hip
+      - FR_TopLeg
+      - FR_BotLeg
+      - BL_Hip
+      - BL_TopLeg
+      - BL_BotLeg
+      - BR_Hip
+      - BR_TopLeg
+      - BR_BotLeg
     interface_name: position

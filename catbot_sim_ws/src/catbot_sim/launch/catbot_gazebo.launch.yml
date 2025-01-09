@@ -6,5 +6,5 @@ gazebo:
   world: ""
   worlds_dir: "worlds"
   spawn_pos_xyz: [0.0, 0.0, 0.0]
-controllers: ["joint_state_broadcaster", "catbot_controller"] # in order of initialization
+# controllers: ["joint_state_broadcaster", "catbot_controller"] # in order of initialization TBD
 ros_to_gz_bridge: "Also TBD"

@@ -1,16 +1,18 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
 from launch.substitutions import (Command, LaunchConfiguration)
 from launch_ros.actions import (Node, SetParameter)
 from ament_index_python.packages import (get_package_prefix, get_package_share_directory)
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 import yaml
 
 ### Designed to convert a yaml file to a launcheable file that loads gazebo with the right SDFs, bridge, etc...
-### ros2 launch yaml_to_py_gazebo.launch.py <your yaml file>
+### ros2 launch yaml_to_py_gazebo.launch.py
 def generate_launch_description():
     
     # YAML FILE GOES HERE !!!!!
@@ -81,11 +83,14 @@ def generate_launch_description():
                                             description="Spawn Z")
     
     # Setup to launch the simulator and Gazebo world
+    world_filepath = install_dir_path + "/" + package_description + "/" + worlds_dir + "/" + world_name + ".sdf"
+    if (len(world_name) == 0):
+        world_filepath = "empty.sdf"
+    
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        # launch_arguments=[('gz_args', [' -r -v 4 '] + [install_dir_path + "/" + package_description + "/" + worlds_dir + "/" + world_name + ".sdf"])],
-        launch_arguments=[('gz_args', [' -r -v 4 '] + ["empty.sdf"])],
+        launch_arguments=[('gz_args', [' -r -v 4 '] + [world_filepath])],
     )
 
     gz_spawn_entity = Node(
@@ -130,9 +135,33 @@ def generate_launch_description():
         output='screen'
     )
     
+    load_joint_state_broadcaster = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'joint_state_broadcaster'],
+        output='screen'
+    )
+
+    load_catbot_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'catbot_controller'],
+        output='screen'
+    )
+    
     # Create and Return the Launch Description Object #
     return LaunchDescription(
         [
+            RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=gz_spawn_entity,
+                on_exit=[load_joint_state_broadcaster],
+            )
+            ),
+            RegisterEventHandler(
+                event_handler=OnProcessExit(
+                    target_action=load_joint_state_broadcaster,
+                    on_exit=[load_catbot_controller],
+                )
+            ),
             bridge,
             # Sets use_sim_time for all nodes started below (doesn't work for nodes started from ignition gazebo) #
             SetParameter(name="use_sim_time", value=True),

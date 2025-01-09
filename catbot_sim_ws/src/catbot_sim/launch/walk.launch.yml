@@ -1,0 +1,39 @@
+launch:
+- node:
+    pkg: "catbot_sim"
+    exec: "ik_node"
+    name: "ik_node_0"
+    param:
+    -
+      name: "a1"
+      value: 0.00
+    -
+      name: "a2"
+      value: 0.96
+    -
+      name: "a3"
+      value: 0.70
+    - 
+      name: "l1"
+      value: 4.45
+    -  
+      name: "l2"
+      value: 3.35
+
+- node:
+    pkg: "catbot_sim"
+    exec: "walk_node"
+    name: "walk_node_0"
+    param:
+    - 
+      name: "stepHeight"
+      value: 0.5
+    - 
+      name: "stepLength"
+      value: 1.0
+    - 
+      name: "heightOffset"
+      value: 4.8
+    - 
+      name: "period"
+      value: 1.0

@@ -13,9 +13,8 @@ class QuadrupedController(Node):
         self.joint_publisher = self.create_publisher(Float64MultiArray, '/catbot_controller/commands', 10) # /catbot_controller/commands
 
         # Gait settings
-        self.step_height = 0.10  # Max foot lift during step (meters)
-        self.step_length = 0.10  # Step length in x-direction (meters)
-        self.gait_phase = 0.0  # Phase offset between legs
+        self.step_height = 0.05  # Max foot lift during step (meters)
+        self.step_length = 0.05  # Step length in x-direction (meters)
         self.frequency = 1.0  # Hz
 
         # Initial parameters
@@ -49,6 +48,7 @@ class QuadrupedController(Node):
             l2 = 0.113  # Knee to foot length
             hip_angle = math.atan2(y, x)
             d = math.sqrt(x**2 + y**2 + z**2)
+            self.get_logger().info("HEHEHEHEH: " + str((l1**2 + l2**2 - d**2) / (2 * l1 * l2)))
             knee_angle = math.acos((l1**2 + l2**2 - d**2) / (2 * l1 * l2))
             lower_leg_angle = -knee_angle / 2
             upper_leg_angle = knee_angle / 2
